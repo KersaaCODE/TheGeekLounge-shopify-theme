@@ -1,0 +1,78 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>Your Addresses</h1>
+  </div>
+  <div style="max-width:600px;margin:0 auto;">
+    <h2 style="font-size:1.2rem;margin-bottom:16px;">Add a New Address</h2>
+    {% form 'customer_address', customer.new_address %}
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label class="product-page__variant-label" for="address_first_name">First Name</label>
+            <input type="text" name="address[first_name]" id="address_first_name" value="{{ form.first_name }}" autocomplete="given-name" class="search-page__input" style="width:100%;">
+          </div>
+          <div>
+            <label class="product-page__variant-label" for="address_last_name">Last Name</label>
+            <input type="text" name="address[last_name]" id="address_last_name" value="{{ form.last_name }}" autocomplete="family-name" class="search-page__input" style="width:100%;">
+          </div>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="address_address1">Address</label>
+          <input type="text" name="address[address1]" id="address_address1" value="{{ form.address1 }}" autocomplete="address-line1" class="search-page__input" style="width:100%;" required>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="address_address2">Apartment, suite, etc.</label>
+          <input type="text" name="address[address2]" id="address_address2" value="{{ form.address2 }}" autocomplete="address-line2" class="search-page__input" style="width:100%;">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label class="product-page__variant-label" for="address_city">City</label>
+            <input type="text" name="address[city]" id="address_city" value="{{ form.city }}" autocomplete="address-level2" class="search-page__input" style="width:100%;" required>
+          </div>
+          <div>
+            <label class="product-page__variant-label" for="address_zip">ZIP / Postal Code</label>
+            <input type="text" name="address[zip]" id="address_zip" value="{{ form.zip }}" autocomplete="postal-code" class="search-page__input" style="width:100%;" required>
+          </div>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="address_country">Country</label>
+          <select name="address[country]" id="address_country" class="product-page__variant-select" style="width:100%;" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="address_province">Province / State</label>
+          <select name="address[province]" id="address_province" class="product-page__variant-select" style="width:100%;" data-default="{{ form.province }}"></select>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="address_phone">Phone</label>
+          <input type="tel" name="address[phone]" id="address_phone" value="{{ form.phone }}" autocomplete="tel" class="search-page__input" style="width:100%;">
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          {{ form.set_as_default_checkbox }}
+          <label for="address_default_address_{{ form.id }}" style="font-size:0.85rem;color:var(--text-sec);">Set as default address</label>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">Add Address</button>
+      </div>
+    {% endform %}
+
+    {%- if customer.addresses.size > 0 -%}
+      <h2 style="font-size:1.2rem;margin-bottom:16px;margin-top:32px;">Saved Addresses</h2>
+      {%- for address in customer.addresses -%}
+        <div style="background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
+          <p style="font-weight:600;">{{ address.first_name }} {{ address.last_name }}</p>
+          <p style="color:var(--text-sec);font-size:0.9rem;">
+            {{ address.address1 }}{% if address.address2 != blank %}, {{ address.address2 }}{% endif %}<br>
+            {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+            {{ address.country }}
+          </p>
+          {%- if address == customer.default_address -%}
+            <span class="u-badge" style="background:rgba(0,255,106,0.12);color:var(--accent);margin-top:8px;">Default</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+
+    <div style="text-align:center;margin-top:24px;">
+      <a href="{{ routes.account_url }}" style="color:var(--accent);text-decoration:none;font-size:0.9rem;">← Back to Account</a>
+    </div>
+  </div>
+</section>

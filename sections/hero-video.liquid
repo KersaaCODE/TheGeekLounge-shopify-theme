@@ -22,13 +22,16 @@
   <!-- Card hotspots — positioned over each card in the final frame -->
   {%- for block in section.blocks -%}
     {%- if block.type == 'hotspot' -%}
+      {%- assign hs_color = block.settings.color | default: '#FFE500' -%}
+      {%- assign hs_r = hs_color | color_extract: 'red' -%}
+      {%- assign hs_g = hs_color | color_extract: 'green' -%}
+      {%- assign hs_b = hs_color | color_extract: 'blue' -%}
       <a href="{{ block.settings.collection.url | default: '#' }}"
          class="card-hs"
-         style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;width:{{ block.settings.pos_w }}%;height:{{ block.settings.pos_h }}%;
-                --hs-r:{{ block.settings.color.red }};--hs-g:{{ block.settings.color.green }};--hs-b:{{ block.settings.color.blue }};"
+         style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;width:{{ block.settings.pos_w }}%;height:{{ block.settings.pos_h }}%;--hs-r:{{ hs_r }};--hs-g:{{ hs_g }};--hs-b:{{ hs_b }};"
          {{ block.shopify_attributes }}>
-        <div class="hs-ring" style="border-color:{{ block.settings.color | color_modify: 'alpha', 0.4 }};box-shadow:0 0 20px {{ block.settings.color | color_modify: 'alpha', 0.12 }};"></div>
-        <div class="hs-tip" style="background:{{ block.settings.color | color_modify: 'alpha', 0.15 }};color:{{ block.settings.color }};border:1px solid {{ block.settings.color | color_modify: 'alpha', 0.3 }};">{{ block.settings.label }} →</div>
+        <div class="hs-ring" style="border-color:rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.4);box-shadow:0 0 20px rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.12);"></div>
+        <div class="hs-tip" style="background:rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.15);color:{{ hs_color }};border:1px solid rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.3);">{{ block.settings.label }} →</div>
       </a>
     {%- endif -%}
   {%- endfor -%}

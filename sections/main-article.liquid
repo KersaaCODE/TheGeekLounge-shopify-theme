@@ -1,0 +1,58 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>{{ article.title }}</h1>
+    <p style="font-size:0.88rem;">{{ article.published_at | date: '%B %d, %Y' }} · {{ article.author }}</p>
+  </div>
+  <article style="max-width:720px;margin:0 auto;color:var(--text-sec);line-height:1.8;font-size:1rem;">
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.image.alt | escape }}" style="width:100%;border-radius:16px;margin-bottom:32px;">
+    {%- endif -%}
+    <div class="rte">
+      {{ article.content }}
+    </div>
+  </article>
+  <div style="text-align:center;margin-top:40px;">
+    <a href="{{ blog.url }}" style="color:var(--accent);text-decoration:none;">← Back to {{ blog.title }}</a>
+  </div>
+
+  {%- if blog.comments_enabled? -%}
+    <div style="max-width:720px;margin:40px auto 0;">
+      <h2 style="font-size:1.2rem;margin-bottom:24px;">Comments ({{ article.comments_count }})</h2>
+      {%- for comment in article.comments -%}
+        <div style="background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;">
+          <p style="font-weight:600;margin-bottom:4px;">{{ comment.author }}</p>
+          <p style="color:var(--text-muted);font-size:0.78rem;margin-bottom:12px;">{{ comment.created_at | date: '%B %d, %Y' }}</p>
+          <div style="color:var(--text-sec);font-size:0.92rem;">{{ comment.content }}</div>
+        </div>
+      {%- endfor -%}
+
+      {% form 'new_comment', article %}
+        {{ form.errors | default_errors }}
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div>
+              <label class="product-page__variant-label" for="comment_author">Name</label>
+              <input type="text" name="comment[author]" id="comment_author" class="search-page__input" style="width:100%;" required>
+            </div>
+            <div>
+              <label class="product-page__variant-label" for="comment_email">Email</label>
+              <input type="email" name="comment[email]" id="comment_email" class="search-page__input" style="width:100%;" required>
+            </div>
+          </div>
+          <div>
+            <label class="product-page__variant-label" for="comment_body">Comment</label>
+            <textarea name="comment[body]" id="comment_body" class="search-page__input" style="width:100%;min-height:120px;resize:vertical;" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Post Comment</button>
+        </div>
+      {% endform %}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

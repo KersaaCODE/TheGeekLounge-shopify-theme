@@ -1,0 +1,57 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>Login</h1>
+  </div>
+  <div style="max-width:420px;margin:0 auto;">
+    {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <label class="product-page__variant-label" for="email">Email</label>
+          <input type="email" name="customer[email]" id="email" autocomplete="email" class="search-page__input" style="width:100%;" required>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="password">Password</label>
+          <input type="password" name="customer[password]" id="password" autocomplete="current-password" class="search-page__input" style="width:100%;" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;">
+          <a href="{{ routes.account_register_url }}" style="color:var(--accent);text-decoration:none;">Create Account</a>
+          <a href="#recover" id="recoverLink" style="color:var(--text-sec);text-decoration:none;">Forgot Password?</a>
+        </div>
+      </div>
+    {% endform %}
+
+    <div id="recoverForm" style="display:none;margin-top:32px;">
+      <h2 style="font-size:1.2rem;margin-bottom:16px;">Reset Password</h2>
+      {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+        {%- if form.posted_successfully? -%}
+          <p style="color:var(--accent);margin-bottom:16px;">We've sent you an email with a link to update your password.</p>
+        {%- endif -%}
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <label class="product-page__variant-label" for="recover-email">Email</label>
+            <input type="email" name="email" id="recover-email" autocomplete="email" class="search-page__input" style="width:100%;" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;">Send Reset Link</button>
+          <a href="#" id="cancelRecover" style="color:var(--text-sec);text-decoration:none;font-size:0.85rem;text-align:center;">Back to Login</a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var loginForm = document.querySelector('form[action*="login"]').closest('div[style]');
+  var recoverForm = document.getElementById('recoverForm');
+  document.getElementById('recoverLink').addEventListener('click',function(e){
+    e.preventDefault(); loginForm.style.display='none'; recoverForm.style.display='block';
+  });
+  document.getElementById('cancelRecover').addEventListener('click',function(e){
+    e.preventDefault(); loginForm.style.display='block'; recoverForm.style.display='none';
+  });
+  if(window.location.hash==='#recover'){ loginForm.style.display='none'; recoverForm.style.display='block'; }
+})();
+</script>

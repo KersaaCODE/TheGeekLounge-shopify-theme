@@ -4,14 +4,11 @@
 {%- endcomment -%}
 
 {%- assign accent = settings.color_accent | default: '#00FF6A' -%}
-{%- assign accent_r = accent | remove: '#' | slice: 0, 2 -%}
-{%- assign accent_g = accent | remove: '#' | slice: 2, 2 -%}
-{%- assign accent_b = accent | remove: '#' | slice: 4, 2 -%}
 
 <style>
   :root {
     --accent:     {{ settings.color_accent | default: '#00FF6A' }};
-    --accent-rgb: {{ accent_r | hex_to_dec | default: 0 }}, {{ accent_g | hex_to_dec | default: 255 }}, {{ accent_b | hex_to_dec | default: 106 }};
+    --accent-rgb: {{ accent | color_extract: 'red' }}, {{ accent | color_extract: 'green' }}, {{ accent | color_extract: 'blue' }};
     --secondary:  {{ settings.color_secondary | default: '#A020F0' }};
     --bg:         {{ settings.color_background | default: '#0A0812' }};
     --text:       {{ settings.color_text | default: '#FFFFFF' }};

@@ -1,0 +1,30 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>Create Account</h1>
+  </div>
+  <div style="max-width:420px;margin:0 auto;">
+    {% form 'create_customer' %}
+      {{ form.errors | default_errors }}
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <label class="product-page__variant-label" for="first_name">First Name</label>
+          <input type="text" name="customer[first_name]" id="first_name" autocomplete="given-name" class="search-page__input" style="width:100%;" required>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="last_name">Last Name</label>
+          <input type="text" name="customer[last_name]" id="last_name" autocomplete="family-name" class="search-page__input" style="width:100%;" required>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="email">Email</label>
+          <input type="email" name="customer[email]" id="email" autocomplete="email" class="search-page__input" style="width:100%;" required>
+        </div>
+        <div>
+          <label class="product-page__variant-label" for="password">Password</label>
+          <input type="password" name="customer[password]" id="password" autocomplete="new-password" class="search-page__input" style="width:100%;" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">Create Account</button>
+        <p style="text-align:center;font-size:0.85rem;color:var(--text-sec);">Already have an account? <a href="{{ routes.account_login_url }}" style="color:var(--accent);text-decoration:none;">Sign In</a></p>
+      </div>
+    {% endform %}
+  </div>
+</section>

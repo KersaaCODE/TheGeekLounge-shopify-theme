@@ -1,0 +1,48 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>My Account</h1>
+    <p>Welcome back, {{ customer.first_name }}!</p>
+  </div>
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
+      <h2 style="font-size:1.3rem;">Order History</h2>
+      <a href="{{ routes.account_logout_url }}" style="color:var(--text-sec);text-decoration:none;font-size:0.85rem;">Logout</a>
+    </div>
+
+    {%- if customer.orders.size > 0 -%}
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        {%- for order in customer.orders -%}
+          <a href="{{ order.customer_url }}" class="cart-item" style="text-decoration:none;color:white;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--accent);">{{ order.name }}</div>
+            <div>
+              <div class="cart-item__title">{{ order.created_at | date: '%B %d, %Y' }}</div>
+              <div class="cart-item__variant">{{ order.financial_status_label }} — {{ order.fulfillment_status_label | default: 'Unfulfilled' }}</div>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace;color:var(--accent);">{{ order.total_price | money }}</div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p style="text-align:center;color:var(--text-sec);padding:40px 0;">No orders yet.</p>
+      <div style="text-align:center;">
+        <a href="{{ routes.all_products_collection_url }}" class="btn-primary">Start Shopping</a>
+      </div>
+    {%- endif -%}
+
+    <div style="margin-top:48px;">
+      <h2 style="font-size:1.3rem;margin-bottom:16px;">Account Details</h2>
+      <div style="background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:24px;">
+        <p><strong>{{ customer.name }}</strong></p>
+        <p style="color:var(--text-sec);font-size:0.9rem;">{{ customer.email }}</p>
+        {%- if customer.default_address -%}
+          <p style="color:var(--text-sec);font-size:0.9rem;margin-top:12px;">
+            {{ customer.default_address.address1 }}<br>
+            {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
+            {{ customer.default_address.country }}
+          </p>
+        {%- endif -%}
+        <a href="{{ routes.account_addresses_url }}" style="color:var(--accent);text-decoration:none;font-size:0.85rem;display:inline-block;margin-top:12px;">Manage Addresses</a>
+      </div>
+    </div>
+  </div>
+</section>

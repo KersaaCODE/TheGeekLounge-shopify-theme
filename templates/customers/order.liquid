@@ -1,0 +1,42 @@
+<section class="collection-page">
+  <div class="collection-header">
+    <h1>Order {{ order.name }}</h1>
+    <p>Placed on {{ order.created_at | date: '%B %d, %Y at %I:%M %p' }}</p>
+  </div>
+  <div style="max-width:800px;margin:0 auto;">
+    {%- for line_item in order.line_items -%}
+      <div class="cart-item">
+        {%- if line_item.image -%}
+          <img class="cart-item__image" src="{{ line_item.image | image_url: width: 160 }}" alt="{{ line_item.title | escape }}">
+        {%- else -%}
+          <div class="cart-item__image" style="background:var(--glass);"></div>
+        {%- endif -%}
+        <div>
+          <div class="cart-item__title">{{ line_item.title }}</div>
+          {%- unless line_item.variant.title == 'Default Title' -%}
+            <div class="cart-item__variant">{{ line_item.variant.title }}</div>
+          {%- endunless -%}
+          <div class="cart-item__variant">Qty: {{ line_item.quantity }}</div>
+        </div>
+        <div class="cart-item__price">{{ line_item.final_line_price | money }}</div>
+      </div>
+    {%- endfor -%}
+
+    <div class="cart-footer">
+      <div style="display:flex;flex-direction:column;gap:8px;text-align:right;">
+        <div style="color:var(--text-sec);font-size:0.9rem;">Subtotal: {{ order.subtotal_price | money }}</div>
+        {%- for shipping_method in order.shipping_methods -%}
+          <div style="color:var(--text-sec);font-size:0.9rem;">Shipping ({{ shipping_method.title }}): {{ shipping_method.price | money }}</div>
+        {%- endfor -%}
+        {%- if order.tax_price > 0 -%}
+          <div style="color:var(--text-sec);font-size:0.9rem;">Tax: {{ order.tax_price | money }}</div>
+        {%- endif -%}
+        <div class="cart-footer__total">Total: <span>{{ order.total_price | money }}</span></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;">
+      <a href="{{ routes.account_url }}" style="color:var(--accent);text-decoration:none;font-size:0.9rem;">← Back to Account</a>
+    </div>
+  </div>
+</section>
