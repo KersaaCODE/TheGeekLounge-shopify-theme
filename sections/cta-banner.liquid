@@ -3,7 +3,7 @@
   <div class="cta-wrap">
     <span class="cta-eye">{{ section.settings.eyebrow | default: '// Join The Lounge' }}</span>
     <h2 class="cta-h">{{ section.settings.heading | default: 'Your Collection Starts Tonight' }}</h2>
-    <p class="cta-sub">{{ section.settings.subheading | default: 'Four universes. Endless pulls. The lounge is open — grab your cards while they\'re still in stock.' }}</p>
+    <p class="cta-sub">{{ section.settings.subheading | default: 'Four universes. Endless pulls. The lounge is open.' }}</p>
     <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn-primary btn-lg">{{ section.settings.button_label | default: 'Start Your Collection' }}</a>
   </div>
 </section>
