@@ -3,7 +3,8 @@
   <p class="sec-sub">{{ section.settings.subtitle | default: 'Four legendary universes. One lounge. Find your game and start pulling.' }}</p>
   <div class="u-grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.collection.url | default: '#' }}"
+      {%- assign card_url = block.settings.collection.url | default: block.settings.fallback_url | default: '/collections/all' -%}
+      <a href="{{ card_url }}"
          class="u-card"
          style="border-left:3px solid {{ block.settings.color }};"
          {{ block.shopify_attributes }}>
@@ -41,27 +42,20 @@
       "type": "universe",
       "name": "Universe",
       "settings": [
-        { "type": "collection", "id": "collection",  "label": "Collection" },
-        { "type": "text",       "id": "icon",        "label": "Icon (emoji)",    "default": "⚡" },
-        { "type": "text",       "id": "badge",       "label": "Badge Label",     "default": "Pokémon TCG" },
-        { "type": "text",       "id": "name",        "label": "Display Name",    "default": "Pokémon Cards & Sealed" },
-        { "type": "textarea",   "id": "description", "label": "Description" },
-        { "type": "color",      "id": "color",       "label": "Brand Color",     "default": "#FFE500" },
-        { "type": "text",       "id": "tags",        "label": "Tags (comma-separated)", "default": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles" },
-        { "type": "text",       "id": "cta_label",   "label": "CTA Label",       "default": "Browse Pokémon" }
+        { "type": "collection", "id": "collection",   "label": "Collection (pick in editor)" },
+        { "type": "url",        "id": "fallback_url",  "label": "Fallback URL (if no collection picked)" },
+        { "type": "text",       "id": "icon",          "label": "Icon (emoji)",    "default": "⚡" },
+        { "type": "text",       "id": "badge",         "label": "Badge Label",     "default": "Pokémon TCG" },
+        { "type": "text",       "id": "name",          "label": "Display Name",    "default": "Pokémon Cards & Sealed" },
+        { "type": "textarea",   "id": "description",   "label": "Description" },
+        { "type": "color",      "id": "color",         "label": "Brand Color",     "default": "#FFE500" },
+        { "type": "text",       "id": "tags",          "label": "Tags (comma-separated)", "default": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles" },
+        { "type": "text",       "id": "cta_label",     "label": "CTA Label",       "default": "Browse Pokémon" }
       ]
     }
   ],
   "presets": [
-    {
-      "name": "Universe Cards",
-      "blocks": [
-        { "type": "universe", "settings": { "icon": "⚡", "badge": "Pokémon TCG", "name": "Pokémon Cards & Sealed", "description": "From vintage classics to the latest expansions. Booster packs, Elite Trainer Boxes, premium collections & rare singles — catch 'em all.", "color": "#FFE500", "tags": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles", "cta_label": "Browse Pokémon" } },
-        { "type": "universe", "settings": { "icon": "☠️", "badge": "One Piece TCG", "name": "One Piece Cards & Sealed", "description": "Set sail with the Straw Hats. Full sets, sealed booster boxes, alternate art rarities & fresh pulls from every arc of the Grand Line.", "color": "#FF6B2B", "tags": "Booster Boxes, Leader Cards, Alt Art Rarities, Sealed Sets", "cta_label": "Browse One Piece" } },
-        { "type": "universe", "settings": { "icon": "🍃", "badge": "Naruto TCG", "name": "Naruto Cards & Sealed", "description": "From the Hidden Leaf to the Summit. Ninja cards, sealed products, collector editions & legendary jutsu pulls await your collection.", "color": "#FF4500", "tags": "Singles, Sealed Packs, Collector Sets, Rare Jutsu", "cta_label": "Browse Naruto" } },
-        { "type": "universe", "settings": { "icon": "⚔️", "badge": "LoL Rift Bound", "name": "Rift Bound Cards & Sealed", "description": "The newest card game drops on the Rift. Be a pioneer — sealed product, starter decks & rare champion cards available while stock lasts.", "color": "#00C0FF", "tags": "Starter Decks, Booster Packs, Champion Cards, Sealed Sets", "cta_label": "Browse Rift Bound" } }
-      ]
-    }
+    { "name": "Universe Cards" }
   ]
 }
 {% endschema %}

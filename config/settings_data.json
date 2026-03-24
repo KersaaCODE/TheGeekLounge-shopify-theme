@@ -19,18 +19,25 @@
           "brand_second": "Lounge"
         },
         "blocks": {
-          "link_collections": {
+          "link_all": {
             "type": "link",
             "settings": {
-              "label": "Collections",
-              "url": "/collections"
+              "label": "All Products",
+              "url": "/collections/all"
             }
           },
-          "link_new": {
+          "link_pokemon": {
             "type": "link",
             "settings": {
-              "label": "New Drops",
-              "url": "/collections/all"
+              "label": "Pokémon",
+              "url": "/collections/pokemon"
+            }
+          },
+          "link_onepiece": {
+            "type": "link",
+            "settings": {
+              "label": "One Piece",
+              "url": "/collections/onepiece"
             }
           },
           "cta_shop": {
@@ -41,14 +48,14 @@
             }
           }
         },
-        "block_order": ["link_collections", "link_new", "cta_shop"]
+        "block_order": ["link_all", "link_pokemon", "link_onepiece", "cta_shop"]
       },
       "footer": {
         "type": "footer",
         "settings": {
           "brand_first": "TheGeek",
           "brand_second": "Lounge",
-          "footer_menu": ""
+          "footer_menu": "footer"
         }
       },
       "announcement-bar": {

@@ -83,6 +83,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
+        "eyebrow": "// Latest Drops",
         "title": "Latest Drops",
         "subtitle": "Fresh pulls just landed. Grab them before they're gone.",
         "limit": 8
@@ -104,7 +105,8 @@
             "description": "From vintage classics to the latest expansions. Booster packs, Elite Trainer Boxes, premium collections & rare singles — catch 'em all.",
             "color": "#FFE500",
             "tags": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles",
-            "cta_label": "Browse Pokémon"
+            "cta_label": "Browse Pokémon",
+            "fallback_url": "/collections/pokemon"
           }
         },
         "onepiece": {
@@ -116,7 +118,8 @@
             "description": "Set sail with the Straw Hats. Full sets, sealed booster boxes, alternate art rarities & fresh pulls from every arc of the Grand Line.",
             "color": "#FF6B2B",
             "tags": "Booster Boxes, Leader Cards, Alt Art Rarities, Sealed Sets",
-            "cta_label": "Browse One Piece"
+            "cta_label": "Browse One Piece",
+            "fallback_url": "/collections/one-piece"
           }
         },
         "naruto": {
@@ -128,7 +131,8 @@
             "description": "From the Hidden Leaf to the Summit. Ninja cards, sealed products, collector editions & legendary jutsu pulls await your collection.",
             "color": "#FF4500",
             "tags": "Singles, Sealed Packs, Collector Sets, Rare Jutsu",
-            "cta_label": "Browse Naruto"
+            "cta_label": "Browse Naruto",
+            "fallback_url": "/collections/naruto"
           }
         },
         "lolriftbound": {
@@ -140,7 +144,8 @@
             "description": "The newest card game drops on the Rift. Be a pioneer — sealed product, starter decks & rare champion cards available while stock lasts.",
             "color": "#00C0FF",
             "tags": "Starter Decks, Booster Packs, Champion Cards, Sealed Sets",
-            "cta_label": "Browse Rift Bound"
+            "cta_label": "Browse Rift Bound",
+            "fallback_url": "/collections/lol-rift-bound"
           }
         }
       },
@@ -161,7 +166,8 @@
         "eyebrow": "// Join The Lounge",
         "heading": "Your Collection Starts Tonight",
         "subheading": "Four universes. Endless pulls. The lounge is open — grab your cards while they're still in stock.",
-        "button_label": "Start Your Collection"
+        "button_label": "Start Your Collection",
+        "button_url": "/collections/all"
       }
     }
   },
