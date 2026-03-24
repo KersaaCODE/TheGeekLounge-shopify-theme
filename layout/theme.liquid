@@ -43,6 +43,8 @@
 <body class="template-{{ template.name }}{% if settings.enable_crt_scanlines %} crt-lines{% endif %}">
   <a href="#MainContent" class="skip-link">Skip to content</a>
 
+  {% section 'announcement-bar' %}
+
   {% render 'starscape-canvas' %}
 
   {%- if settings.enable_scroll_progress -%}

@@ -1,0 +1,50 @@
+{%- assign fc = section.settings.collection -%}
+<section id="featured" style="position:relative;z-index:1;padding:100px 32px;">
+  <div class="eyebrow">{{ section.settings.eyebrow | default: '// Latest Drops' }}</div>
+  <div class="sec-title">{{ section.settings.title | default: 'Latest Drops' }}</div>
+  <p class="sec-sub">{{ section.settings.subtitle | default: 'Fresh pulls just landed. Grab them before they\'re gone.' }}</p>
+
+  <div class="product-grid" style="max-width:1200px;margin:0 auto;">
+    {%- if fc -%}
+      {%- for product in fc.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..section.settings.limit) -%}
+        <div class="product-card">
+          <div class="product-card__link">
+            <div class="product-card__image-wrap product-card__placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder-svg' }}
+            </div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">Sample Product {{ i }}</h3>
+              <p class="product-card__price">$0.00</p>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if fc -%}
+    <div style="text-align:center;margin-top:48px;">
+      <a href="{{ fc.url }}" class="btn-primary">View All {{ fc.title }}</a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    { "type": "text",       "id": "eyebrow", "label": "Eyebrow",    "default": "// Latest Drops" },
+    { "type": "text",       "id": "title",   "label": "Title",      "default": "Latest Drops" },
+    { "type": "textarea",   "id": "subtitle","label": "Subtitle",   "default": "Fresh pulls just landed. Grab them before they're gone." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range",      "id": "limit",   "label": "Products to show", "min": 4, "max": 16, "step": 2, "default": 8 }
+  ],
+  "presets": [
+    { "name": "Featured Collection" }
+  ]
+}
+{% endschema %}

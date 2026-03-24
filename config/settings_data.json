@@ -10,6 +10,55 @@
     "color_lol": "#00C0FF",
     "enable_starscape": true,
     "enable_crt_scanlines": true,
-    "enable_scroll_progress": true
+    "enable_scroll_progress": true,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "brand_first": "TheGeek",
+          "brand_second": "Lounge"
+        },
+        "blocks": {
+          "link_collections": {
+            "type": "link",
+            "settings": {
+              "label": "Collections",
+              "url": "/collections"
+            }
+          },
+          "link_new": {
+            "type": "link",
+            "settings": {
+              "label": "New Drops",
+              "url": "/collections/all"
+            }
+          },
+          "cta_shop": {
+            "type": "cta",
+            "settings": {
+              "label": "Shop Now",
+              "url": "/collections/all"
+            }
+          }
+        },
+        "block_order": ["link_collections", "link_new", "cta_shop"]
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "brand_first": "TheGeek",
+          "brand_second": "Lounge",
+          "footer_menu": ""
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "🔥 Free shipping on orders over $50 — New drops every Friday!",
+          "link_url": "/collections/all",
+          "show_bar": true
+        }
+      }
+    }
   }
 }
