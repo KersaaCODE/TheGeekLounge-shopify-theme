@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_accent": "#00FF6A",
@@ -48,7 +57,12 @@
             }
           }
         },
-        "block_order": ["link_all", "link_pokemon", "link_onepiece", "cta_shop"]
+        "block_order": [
+          "link_all",
+          "link_pokemon",
+          "link_onepiece",
+          "cta_shop"
+        ]
       },
       "footer": {
         "type": "footer",
