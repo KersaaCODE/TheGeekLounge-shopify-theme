@@ -1,10 +1,14 @@
 <section id="cta">
-  <div class="cta-orb"></div>
+  <div class="orb orb--accent" style="width:500px;height:500px;top:20%;left:10%;animation-delay:0s;"></div>
+  <div class="orb orb--secondary" style="width:400px;height:400px;bottom:10%;right:15%;animation-delay:2s;"></div>
+  <div class="orb orb--accent" style="width:300px;height:300px;top:60%;left:60%;animation-delay:4s;opacity:0.08;"></div>
   <div class="cta-wrap">
-    <span class="cta-eye">{{ section.settings.eyebrow | default: '// Join The Lounge' }}</span>
-    <h2 class="cta-h">{{ section.settings.heading | default: 'Your Collection Starts Tonight' }}</h2>
-    <p class="cta-sub">{{ section.settings.subheading | default: 'Four universes. Endless pulls. The lounge is open.' }}</p>
-    <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn-primary btn-lg">{{ section.settings.button_label | default: 'Start Your Collection' }}</a>
+    <span class="cta-eye reveal type-cursor">{{ section.settings.eyebrow | default: '// Join The Lounge' }}</span>
+    <h2 class="cta-h reveal gradient-text">{{ section.settings.heading | default: 'Your Collection Starts Tonight' }}</h2>
+    <p class="cta-sub reveal">{{ section.settings.subheading | default: 'Four universes. Endless pulls. The lounge is open.' }}</p>
+    <div class="reveal">
+      <a href="{{ section.settings.button_url | default: '/collections/all' }}" class="btn-primary btn-lg glow-pulse">{{ section.settings.button_label | default: 'Start Your Collection' }}</a>
+    </div>
   </div>
 </section>
 

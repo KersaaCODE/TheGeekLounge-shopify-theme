@@ -1,9 +1,9 @@
 <section id="specs">
   <div class="specs-wrap">
-    <div class="eyebrow">{{ section.settings.eyebrow | default: 'By The Numbers' }}</div>
-    <div class="specs-grid">
+    <div class="eyebrow reveal">{{ section.settings.eyebrow | default: 'By The Numbers' }}</div>
+    <div class="specs-grid stagger-children">
       {%- for block in section.blocks -%}
-        <div class="spec" data-target="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix }}" {{ block.shopify_attributes }}>
+        <div class="spec reveal" data-target="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix }}" {{ block.shopify_attributes }}>
           <span class="spec-n">0</span>
           <span class="spec-l">{{ block.settings.label }}</span>
         </div>

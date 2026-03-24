@@ -1,7 +1,7 @@
 <section id="newsletter" style="position:relative;z-index:1;padding:100px 32px;border-top:1px solid var(--border);">
   <div style="max-width:560px;margin:0 auto;text-align:center;">
-    <span class="cta-eye">{{ section.settings.eyebrow | default: '// Stay In The Loop' }}</span>
-    <h2 class="cta-h" style="font-size:clamp(1.6rem,4vw,2.4rem);">{{ section.settings.heading | default: 'Never Miss a Drop' }}</h2>
+    <span class="cta-eye reveal type-cursor">{{ section.settings.eyebrow | default: '// Stay In The Loop' }}</span>
+    <h2 class="cta-h reveal gradient-text" style="font-size:clamp(1.6rem,4vw,2.4rem);">{{ section.settings.heading | default: 'Never Miss a Drop' }}</h2>
     <p class="cta-sub">{{ section.settings.subheading | default: "New arrivals, restocks, and exclusive deals — straight to your inbox. No spam, just cards." }}</p>
 
     {% form 'customer', id: 'newsletter-form' %}

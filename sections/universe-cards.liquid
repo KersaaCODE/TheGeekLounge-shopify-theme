@@ -1,17 +1,21 @@
 <section id="universes">
-  <div class="sec-title">{{ section.settings.title | default: 'Shop by Universe' }}</div>
-  <p class="sec-sub">{{ section.settings.subtitle | default: 'Four legendary universes. One lounge. Find your game and start pulling.' }}</p>
+  <div class="sec-title reveal gradient-text">{{ section.settings.title | default: 'Shop by Universe' }}</div>
+  <p class="sec-sub reveal">{{ section.settings.subtitle | default: 'Four legendary universes. One lounge. Find your game and start pulling.' }}</p>
   <div class="u-grid">
     {%- for block in section.blocks -%}
       {%- assign card_url = block.settings.collection.url | default: block.settings.fallback_url | default: '/collections/all' -%}
       <a href="{{ card_url }}"
-         class="u-card"
+         class="u-card tilt-card"
          style="border-left:3px solid {{ block.settings.color }};"
          {{ block.shopify_attributes }}>
         <div class="u-head">
           <div class="u-icon">{{ block.settings.icon }}</div>
           <div class="u-info">
-            <span class="u-badge" style="background:{{ block.settings.color | color_modify: 'alpha', 0.12 }};color:{{ block.settings.color }};">{{ block.settings.badge }}</span>
+            {%- assign badge_color = block.settings.color | default: '#FFE500' -%}
+            {%- assign badge_r = badge_color | color_extract: 'red' -%}
+            {%- assign badge_g = badge_color | color_extract: 'green' -%}
+            {%- assign badge_b = badge_color | color_extract: 'blue' -%}
+            <span class="u-badge" style="background:rgba({{ badge_r }},{{ badge_g }},{{ badge_b }},0.12);color:{{ badge_color }};">{{ block.settings.badge }}</span>
             <div class="u-name">{{ block.settings.name }}</div>
           </div>
         </div>
