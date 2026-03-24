@@ -1,0 +1,67 @@
+{%- comment -%}
+  Recently viewed products — stores product handles in localStorage,
+  renders up to 4 products. Uses Shopify Section Rendering API.
+  Usage: {% render 'recently-viewed' %}
+{%- endcomment -%}
+
+<div id="recentlyViewed" style="display:none;position:relative;z-index:1;padding:80px 32px;border-top:1px solid var(--border);">
+  <div class="eyebrow reveal" style="margin-bottom:40px;">// Recently Viewed</div>
+  <div id="recentlyViewedGrid" class="product-grid" style="max-width:1200px;margin:0 auto;"></div>
+</div>
+
+<script>
+(function(){
+  var KEY = 'tgl_recently_viewed';
+  var MAX = 8;
+  var SHOW = 4;
+
+  /* Save current product to recently viewed */
+  {%- if template.name == 'product' -%}
+    var handle = {{ product.handle | json }};
+    var items = JSON.parse(localStorage.getItem(KEY) || '[]');
+    items = items.filter(function(h){ return h !== handle; });
+    items.unshift(handle);
+    if (items.length > MAX) items = items.slice(0, MAX);
+    localStorage.setItem(KEY, JSON.stringify(items));
+  {%- endif -%}
+
+  /* Render recently viewed on product and collection pages */
+  var items = JSON.parse(localStorage.getItem(KEY) || '[]');
+  {%- if template.name == 'product' -%}
+    items = items.filter(function(h){ return h !== {{ product.handle | json }}; });
+  {%- endif -%}
+  items = items.slice(0, SHOW);
+  if (!items.length) return;
+
+  var grid = document.getElementById('recentlyViewedGrid');
+  var wrap = document.getElementById('recentlyViewed');
+  if (!grid || !wrap) return;
+
+  var loaded = 0;
+  items.forEach(function(handle){
+    fetch('/products/' + handle + '.js')
+      .then(function(r){ return r.json(); })
+      .then(function(p){
+        var price = (p.price / 100).toLocaleString('en-US', {style:'currency', currency: {{ shop.currency | json }} });
+        var compare = p.compare_at_price > p.price
+          ? '<span class="product-card__compare-price">' + (p.compare_at_price / 100).toLocaleString('en-US', {style:'currency', currency: {{ shop.currency | json }} }) + '</span> '
+          : '';
+        var img = p.featured_image
+          ? '<img src="' + p.featured_image.replace(/(\.[^.]+)$/, '_480x$1') + '" alt="" class="product-card__image" loading="lazy">'
+          : '';
+
+        var card = document.createElement('div');
+        card.className = 'product-card tilt-card';
+        card.innerHTML = '<a href="/products/' + handle + '" class="product-card__link" style="display:block;height:100%;text-decoration:none;color:white;">'
+          + '<div class="product-card__image-wrap">' + img + '</div>'
+          + '<div class="product-card__info"><h3 class="product-card__title">' + p.title + '</h3>'
+          + '<p class="product-card__price">' + compare + price + '</p></div></a>';
+        grid.appendChild(card);
+
+        loaded++;
+        if (loaded >= 1) wrap.style.display = 'block';
+      })
+      .catch(function(){});
+  });
+})();
+</script>

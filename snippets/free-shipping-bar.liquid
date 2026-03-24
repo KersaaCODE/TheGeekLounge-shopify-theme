@@ -1,0 +1,26 @@
+{%- comment -%}
+  Free shipping progress bar for cart page.
+  Usage: {% render 'free-shipping-bar' %}
+  Set threshold in theme settings or default $50.
+{%- endcomment -%}
+
+{%- assign threshold_cents = 5000 -%}
+{%- assign remaining = threshold_cents | minus: cart.total_price -%}
+{%- assign progress = cart.total_price | times: 100 | divided_by: threshold_cents -%}
+{%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
+
+<div class="shipping-bar">
+  {%- if remaining <= 0 -%}
+    <p class="shipping-bar__text shipping-bar__text--success">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      You qualify for <strong>free shipping!</strong>
+    </p>
+  {%- else -%}
+    <p class="shipping-bar__text">
+      Add <strong>{{ remaining | money }}</strong> more for <strong>free shipping</strong>
+    </p>
+  {%- endif -%}
+  <div class="shipping-bar__track">
+    <div class="shipping-bar__fill" style="width:{{ progress }}%;"></div>
+  </div>
+</div>

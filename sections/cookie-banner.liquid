@@ -1,0 +1,37 @@
+{%- if section.settings.show_banner -%}
+<div id="cookieBanner" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:9990;
+  background:rgba(10,8,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  padding:20px 32px;display:none;
+">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+    <p style="color:var(--text-sec);font-size:0.85rem;flex:1;min-width:240px;line-height:1.5;">
+      {{ section.settings.text | default: 'We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies.' }}
+      {%- if section.settings.policy_url != blank -%}
+        <a href="{{ section.settings.policy_url }}" style="color:var(--accent);text-decoration:none;">Learn more</a>
+      {%- endif -%}
+    </p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="acceptCookies()" class="btn-primary" style="padding:10px 24px;font-size:0.82rem;">Accept</button>
+      <button onclick="dismissCookies()" style="background:var(--glass);border:1px solid var(--border);color:var(--text-sec);padding:10px 24px;border-radius:12px;font-size:0.82rem;cursor:pointer;">Decline</button>
+    </div>
+  </div>
+</div>
+<script>
+function acceptCookies(){ localStorage.setItem('cookies_accepted','1'); document.getElementById('cookieBanner').style.display='none'; }
+function dismissCookies(){ localStorage.setItem('cookies_accepted','0'); document.getElementById('cookieBanner').style.display='none'; }
+(function(){ if(!localStorage.getItem('cookies_accepted')){ document.getElementById('cookieBanner').style.display='block'; }})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cookie Banner",
+  "settings": [
+    { "type": "checkbox", "id": "show_banner", "label": "Show cookie banner", "default": true },
+    { "type": "textarea", "id": "text", "label": "Banner text", "default": "We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies." },
+    { "type": "url", "id": "policy_url", "label": "Privacy policy link" }
+  ]
+}
+{% endschema %}

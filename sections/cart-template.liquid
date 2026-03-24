@@ -3,6 +3,7 @@
     <h1 class="cart-page__title">{{ 'general.cart.title' | t }}</h1>
 
     {%- if cart.item_count > 0 -%}
+      {% render 'free-shipping-bar' %}
       <form action="{{ routes.cart_url }}" method="post">
         {%- for item in cart.items -%}
           <div class="cart-item">
