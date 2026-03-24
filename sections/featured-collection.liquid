@@ -10,27 +10,20 @@
         {% render 'product-card', product: product %}
       {%- endfor -%}
     {%- else -%}
-      {%- for i in (1..section.settings.limit) -%}
-        <div class="product-card">
-          <div class="product-card__link">
-            <div class="product-card__image-wrap product-card__placeholder">
-              {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder-svg' }}
-            </div>
-            <div class="product-card__info">
-              <h3 class="product-card__title">Sample Product {{ i }}</h3>
-              <p class="product-card__price">$0.00</p>
-            </div>
-          </div>
-        </div>
+      {%- comment -%} Show all products as fallback when no collection picked {%- endcomment -%}
+      {%- for product in collections.all.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
       {%- endfor -%}
     {%- endif -%}
   </div>
 
-  {%- if fc -%}
-    <div style="text-align:center;margin-top:48px;">
+  <div style="text-align:center;margin-top:48px;">
+    {%- if fc -%}
       <a href="{{ fc.url }}" class="btn-primary">View All {{ fc.title }}</a>
-    </div>
-  {%- endif -%}
+    {%- else -%}
+      <a href="/collections/all" class="btn-primary">View All Products</a>
+    {%- endif -%}
+  </div>
 </section>
 
 {% schema %}
@@ -39,7 +32,7 @@
   "settings": [
     { "type": "text",       "id": "eyebrow", "label": "Eyebrow",    "default": "// Latest Drops" },
     { "type": "text",       "id": "title",   "label": "Title",      "default": "Latest Drops" },
-    { "type": "textarea",   "id": "subtitle","label": "Subtitle",   "default": "Fresh pulls just landed. Grab them before they're gone." },
+    { "type": "textarea",   "id": "subtitle","label": "Subtitle",   "default": "Fresh pulls just landed. Grab them before they are gone." },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range",      "id": "limit",   "label": "Products to show", "min": 4, "max": 16, "step": 2, "default": 8 }
   ],
