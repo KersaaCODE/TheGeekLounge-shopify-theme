@@ -1,0 +1,134 @@
+<!-- Load screen -->
+<div id="loadScreen">
+  <div class="ls-wrap">
+    {% render 'logo-svg', width: 44, height: 44 %}
+    <div class="ls-name"><span class="g">{{ section.settings.brand_first | default: 'TheGeek' }}</span>{{ section.settings.brand_second | default: 'Lounge' }}</div>
+    <div class="ls-mono">{{ section.settings.loading_text | default: 'Entering the lounge' }}</div>
+  </div>
+</div>
+
+<section id="intro">
+  <!-- Intro video (plays once) -->
+  <video id="introVideo" class="intro-vid" autoplay muted playsinline preload="auto"
+    {%- if section.settings.poster_image -%} poster="{{ section.settings.poster_image | image_url: width: 1920 }}"{%- endif -%}>
+    <source src="{{ 'intro.mp4' | asset_url }}" type="video/mp4">
+  </video>
+
+  <!-- Hover video (loops, fades in when intro ends) -->
+  <video id="hoverVideo" class="intro-vid" muted playsinline loop preload="auto">
+    <source src="{{ 'hover.mp4' | asset_url }}" type="video/mp4">
+  </video>
+
+  <!-- Card hotspots — positioned over each card in the final frame -->
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hotspot' -%}
+      <a href="{{ block.settings.collection.url | default: '#' }}"
+         class="card-hs"
+         style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;width:{{ block.settings.pos_w }}%;height:{{ block.settings.pos_h }}%;
+                --hs-r:{{ block.settings.color.red }};--hs-g:{{ block.settings.color.green }};--hs-b:{{ block.settings.color.blue }};"
+         {{ block.shopify_attributes }}>
+        <div class="hs-ring" style="border-color:{{ block.settings.color | color_modify: 'alpha', 0.4 }};box-shadow:0 0 20px {{ block.settings.color | color_modify: 'alpha', 0.12 }};"></div>
+        <div class="hs-tip" style="background:{{ block.settings.color | color_modify: 'alpha', 0.15 }};color:{{ block.settings.color }};border:1px solid {{ block.settings.color | color_modify: 'alpha', 0.3 }};">{{ block.settings.label }} →</div>
+      </a>
+    {%- endif -%}
+  {%- endfor -%}
+
+  <!-- Holographic shimmer overlay -->
+  <div id="holo"></div>
+
+  <!-- Brand mark -->
+  <div id="introBrand">
+    {% render 'logo-svg', width: 20, height: 20 %}
+    <span><span class="g">{{ section.settings.brand_first | default: 'TheGeek' }}</span>{{ section.settings.brand_second | default: 'Lounge' }}</span>
+  </div>
+
+  <!-- Scroll down hint -->
+  <div id="scrollHint">
+    <span>Scroll to explore</span>
+    <div class="arr"></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var loadScreen = document.getElementById('loadScreen');
+  var introVideo = document.getElementById('introVideo');
+  var hoverVideo = document.getElementById('hoverVideo');
+  var hotspots   = document.querySelectorAll('.card-hs');
+  var scrollHint = document.getElementById('scrollHint');
+  var holo       = document.getElementById('holo');
+  var introEl    = document.getElementById('intro');
+
+  introVideo.addEventListener('canplay', function(){
+    loadScreen.style.opacity = '0';
+    setTimeout(function(){ loadScreen.style.display = 'none'; }, 500);
+  }, { once: true });
+
+  introVideo.addEventListener('error', function(){
+    loadScreen.style.opacity = '0';
+    setTimeout(function(){ loadScreen.style.display = 'none'; }, 500);
+  });
+
+  introVideo.addEventListener('ended', function(){
+    introVideo.pause();
+    hoverVideo.play().catch(function(){});
+    hoverVideo.classList.add('active');
+    setTimeout(function(){ introVideo.style.display = 'none'; }, 450);
+
+    hotspots.forEach(function(h, i){
+      setTimeout(function(){ h.classList.add('show'); }, 400 + i * 120);
+    });
+    setTimeout(function(){ holo.classList.add('active'); }, 600);
+    setTimeout(function(){ scrollHint.classList.add('show'); }, 900);
+  });
+
+  /* Holographic mouse tracking */
+  introEl.addEventListener('mousemove', function(e){
+    var r = introEl.getBoundingClientRect();
+    var x = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%';
+    var y = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+    var ang = (Math.atan2(e.clientY - r.top - r.height/2, e.clientX - r.left - r.width/2) * 180 / Math.PI).toFixed(1) + 'deg';
+    holo.style.setProperty('--holo-x', x);
+    holo.style.setProperty('--holo-y', y);
+    holo.style.setProperty('--holo-angle', ang);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Hero Video",
+  "settings": [
+    { "type": "text",         "id": "brand_first",   "label": "Brand (Highlighted)", "default": "TheGeek" },
+    { "type": "text",         "id": "brand_second",  "label": "Brand (Normal)",      "default": "Lounge" },
+    { "type": "text",         "id": "loading_text",  "label": "Loading Text",        "default": "Entering the lounge" },
+    { "type": "image_picker", "id": "poster_image",  "label": "Poster Image (fallback)" }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Card Hotspot",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text",       "id": "label",      "label": "Label",     "default": "Pokémon TCG" },
+        { "type": "color",      "id": "color",      "label": "Color",     "default": "#FFE500" },
+        { "type": "range",      "id": "pos_x",      "label": "X Position (%)", "min": 0, "max": 100, "step": 1, "default": 25 },
+        { "type": "range",      "id": "pos_y",      "label": "Y Position (%)", "min": 0, "max": 100, "step": 1, "default": 25 },
+        { "type": "range",      "id": "pos_w",      "label": "Width (%)",      "min": 5, "max": 60,  "step": 1, "default": 18 },
+        { "type": "range",      "id": "pos_h",      "label": "Height (%)",     "min": 5, "max": 80,  "step": 1, "default": 38 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Video",
+      "blocks": [
+        { "type": "hotspot", "settings": { "label": "Pokémon TCG",    "color": "#FFE500", "pos_x": 27, "pos_y": 25, "pos_w": 18, "pos_h": 38 } },
+        { "type": "hotspot", "settings": { "label": "One Piece TCG",  "color": "#FF6B2B", "pos_x": 5,  "pos_y": 25, "pos_w": 30, "pos_h": 40 } },
+        { "type": "hotspot", "settings": { "label": "Naruto TCG",     "color": "#FF4500", "pos_x": 20, "pos_y": 55, "pos_w": 55, "pos_h": 43 } },
+        { "type": "hotspot", "settings": { "label": "LoL Rift Bound", "color": "#00C0FF", "pos_x": 70, "pos_y": 27, "pos_w": 30, "pos_h": 47 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

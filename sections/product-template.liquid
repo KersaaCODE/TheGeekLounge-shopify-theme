@@ -1,0 +1,73 @@
+<section class="product-page">
+  <div class="product-page__inner">
+    <!-- Gallery -->
+    <div class="product-page__gallery">
+      <div class="product-page__main-image">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 960 }}"
+               alt="{{ product.featured_image.alt | escape }}"
+               width="960"
+               height="{{ 960 | divided_by: product.featured_image.aspect_ratio | round }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-page__info">
+      <h1 class="product-page__title">{{ product.title }}</h1>
+
+      <div class="product-page__price">
+        {{ product.selected_or_first_available_variant.price | money }}
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-page__compare-price">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- form 'product', product -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {%- if product.has_only_default_variant == false -%}
+          <div class="product-page__variants">
+            {%- for option in product.options_with_values -%}
+              <div>
+                <label class="product-page__variant-label" for="option-{{ forloop.index }}">{{ option.name }}</label>
+                <select class="product-page__variant-select" id="option-{{ forloop.index }}" name="options[{{ option.name }}]">
+                  {%- for value in option.values -%}
+                    <option value="{{ value }}" {% if value == option.selected_value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="product-page__qty">
+          <label class="product-page__variant-label" for="qty">{{ 'products.product.quantity' | t }}</label>
+          <input type="number" id="qty" name="quantity" value="1" min="1">
+        </div>
+
+        <button type="submit" class="btn-primary"
+          {%- unless product.selected_or_first_available_variant.available %} disabled{%- endunless -%}>
+          {%- if product.selected_or_first_available_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      {%- if product.description != blank -%}
+        <div class="product-page__description">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Template",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+{%- comment -%}
+  Renders the TheGeekLounge card-stack logo SVG.
+  Usage: {% render 'logo-svg', width: 26, height: 26 %}
+{%- endcomment -%}
+{%- assign w = width | default: 26 -%}
+{%- assign h = height | default: 26 -%}
+<svg width="{{ w }}" height="{{ h }}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="6" width="22" height="28" rx="4" stroke="{{ settings.color_accent | default: '#00FF6A' }}" stroke-width="1.5" fill="rgba(0,255,106,0.06)"/>
+  <rect x="11" y="3" width="22" height="28" rx="4" stroke="{{ settings.color_secondary | default: '#A020F0' }}" stroke-width="1.5" fill="rgba(160,32,240,0.06)"/>
+  <circle cx="22" cy="17" r="4.5" stroke="{{ settings.color_pokemon | default: '#FFE500' }}" stroke-width="1.4"/>
+  <path d="M22 14.5v5M19.5 17h5" stroke="{{ settings.color_pokemon | default: '#FFE500' }}" stroke-width="1.2" stroke-linecap="round"/>
+</svg>

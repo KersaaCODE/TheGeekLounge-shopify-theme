@@ -1,0 +1,67 @@
+<section id="universes">
+  <div class="sec-title">{{ section.settings.title | default: 'Shop by Universe' }}</div>
+  <p class="sec-sub">{{ section.settings.subtitle | default: 'Four legendary universes. One lounge. Find your game and start pulling.' }}</p>
+  <div class="u-grid">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.collection.url | default: '#' }}"
+         class="u-card"
+         style="border-left:3px solid {{ block.settings.color }};"
+         {{ block.shopify_attributes }}>
+        <div class="u-head">
+          <div class="u-icon">{{ block.settings.icon }}</div>
+          <div class="u-info">
+            <span class="u-badge" style="background:{{ block.settings.color | color_modify: 'alpha', 0.12 }};color:{{ block.settings.color }};">{{ block.settings.badge }}</span>
+            <div class="u-name">{{ block.settings.name }}</div>
+          </div>
+        </div>
+        <div class="u-desc">{{ block.settings.description }}</div>
+        {%- if block.settings.tags != blank -%}
+          <div class="u-tags">
+            {%- assign tag_list = block.settings.tags | split: ',' -%}
+            {%- for tag in tag_list -%}
+              <span class="u-tag">{{ tag | strip }}</span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="u-cta" style="color:{{ block.settings.color }};">{{ block.settings.cta_label | default: 'Browse' }} <span class="u-arrow">→</span></div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Universe Cards",
+  "settings": [
+    { "type": "text",     "id": "title",    "label": "Title",    "default": "Shop by Universe" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Four legendary universes. One lounge. Find your game and start pulling." }
+  ],
+  "blocks": [
+    {
+      "type": "universe",
+      "name": "Universe",
+      "settings": [
+        { "type": "collection", "id": "collection",  "label": "Collection" },
+        { "type": "text",       "id": "icon",        "label": "Icon (emoji)",    "default": "⚡" },
+        { "type": "text",       "id": "badge",       "label": "Badge Label",     "default": "Pokémon TCG" },
+        { "type": "text",       "id": "name",        "label": "Display Name",    "default": "Pokémon Cards & Sealed" },
+        { "type": "textarea",   "id": "description", "label": "Description" },
+        { "type": "color",      "id": "color",       "label": "Brand Color",     "default": "#FFE500" },
+        { "type": "text",       "id": "tags",        "label": "Tags (comma-separated)", "default": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles" },
+        { "type": "text",       "id": "cta_label",   "label": "CTA Label",       "default": "Browse Pokémon" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Universe Cards",
+      "blocks": [
+        { "type": "universe", "settings": { "icon": "⚡", "badge": "Pokémon TCG", "name": "Pokémon Cards & Sealed", "description": "From vintage classics to the latest expansions. Booster packs, Elite Trainer Boxes, premium collections & rare singles — catch 'em all.", "color": "#FFE500", "tags": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles", "cta_label": "Browse Pokémon" } },
+        { "type": "universe", "settings": { "icon": "☠️", "badge": "One Piece TCG", "name": "One Piece Cards & Sealed", "description": "Set sail with the Straw Hats. Full sets, sealed booster boxes, alternate art rarities & fresh pulls from every arc of the Grand Line.", "color": "#FF6B2B", "tags": "Booster Boxes, Leader Cards, Alt Art Rarities, Sealed Sets", "cta_label": "Browse One Piece" } },
+        { "type": "universe", "settings": { "icon": "🍃", "badge": "Naruto TCG", "name": "Naruto Cards & Sealed", "description": "From the Hidden Leaf to the Summit. Ninja cards, sealed products, collector editions & legendary jutsu pulls await your collection.", "color": "#FF4500", "tags": "Singles, Sealed Packs, Collector Sets, Rare Jutsu", "cta_label": "Browse Naruto" } },
+        { "type": "universe", "settings": { "icon": "⚔️", "badge": "LoL Rift Bound", "name": "Rift Bound Cards & Sealed", "description": "The newest card game drops on the Rift. Be a pioneer — sealed product, starter decks & rare champion cards available while stock lasts.", "color": "#00C0FF", "tags": "Starter Decks, Booster Packs, Champion Cards, Sealed Sets", "cta_label": "Browse Rift Bound" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

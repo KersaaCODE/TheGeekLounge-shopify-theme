@@ -1,0 +1,25 @@
+<section id="cta">
+  <div class="cta-orb"></div>
+  <div class="cta-wrap">
+    <span class="cta-eye">{{ section.settings.eyebrow | default: '// Join The Lounge' }}</span>
+    <h2 class="cta-h">{{ section.settings.heading | default: 'Your Collection Starts Tonight' }}</h2>
+    <p class="cta-sub">{{ section.settings.subheading | default: 'Four universes. Endless pulls. The lounge is open — grab your cards while they\'re still in stock.' }}</p>
+    <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn-primary btn-lg">{{ section.settings.button_label | default: 'Start Your Collection' }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",      "label": "Eyebrow",      "default": "// Join The Lounge" },
+    { "type": "text",     "id": "heading",       "label": "Heading",      "default": "Your Collection Starts Tonight" },
+    { "type": "textarea", "id": "subheading",    "label": "Subheading",   "default": "Four universes. Endless pulls. The lounge is open — grab your cards while they're still in stock." },
+    { "type": "text",     "id": "button_label",  "label": "Button Label", "default": "Start Your Collection" },
+    { "type": "url",      "id": "button_url",    "label": "Button URL" }
+  ],
+  "presets": [
+    { "name": "CTA Banner" }
+  ]
+}
+{% endschema %}

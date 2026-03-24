@@ -1,0 +1,15 @@
+{
+  "current": {
+    "color_accent": "#00FF6A",
+    "color_secondary": "#A020F0",
+    "color_background": "#0A0812",
+    "color_text": "#FFFFFF",
+    "color_pokemon": "#FFE500",
+    "color_onepiece": "#FF6B2B",
+    "color_naruto": "#FF4500",
+    "color_lol": "#00C0FF",
+    "enable_starscape": true,
+    "enable_crt_scanlines": true,
+    "enable_scroll_progress": true
+  }
+}

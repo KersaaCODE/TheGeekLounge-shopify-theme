@@ -1,0 +1,27 @@
+{%- comment -%}
+  Renders :root CSS custom properties from theme settings.
+  Included in layout/theme.liquid <head>.
+{%- endcomment -%}
+
+{%- assign accent = settings.color_accent | default: '#00FF6A' -%}
+{%- assign accent_r = accent | remove: '#' | slice: 0, 2 -%}
+{%- assign accent_g = accent | remove: '#' | slice: 2, 2 -%}
+{%- assign accent_b = accent | remove: '#' | slice: 4, 2 -%}
+
+<style>
+  :root {
+    --accent:     {{ settings.color_accent | default: '#00FF6A' }};
+    --accent-rgb: {{ accent_r | hex_to_dec | default: 0 }}, {{ accent_g | hex_to_dec | default: 255 }}, {{ accent_b | hex_to_dec | default: 106 }};
+    --secondary:  {{ settings.color_secondary | default: '#A020F0' }};
+    --bg:         {{ settings.color_background | default: '#0A0812' }};
+    --text:       {{ settings.color_text | default: '#FFFFFF' }};
+    --text-sec:   rgba(255,255,255,0.5);
+    --text-muted: rgba(255,255,255,0.28);
+    --border:     rgba(255,255,255,0.06);
+    --glass:      rgba(255,255,255,0.03);
+    --pokemon:    {{ settings.color_pokemon | default: '#FFE500' }};
+    --onepiece:   {{ settings.color_onepiece | default: '#FF6B2B' }};
+    --naruto:     {{ settings.color_naruto | default: '#FF4500' }};
+    --lol:        {{ settings.color_lol | default: '#00C0FF' }};
+  }
+</style>

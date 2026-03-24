@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "hero-video": { "type": "hero-video" },
+    "specs-banner": { "type": "specs-banner" },
+    "universe-cards": { "type": "universe-cards" },
+    "cta-banner": { "type": "cta-banner" }
+  },
+  "order": ["hero-video", "specs-banner", "universe-cards", "cta-banner"]
+}

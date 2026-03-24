@@ -1,0 +1,74 @@
+<section id="specs">
+  <div class="specs-wrap">
+    <div class="eyebrow">{{ section.settings.eyebrow | default: 'By The Numbers' }}</div>
+    <div class="specs-grid">
+      {%- for block in section.blocks -%}
+        <div class="spec" data-target="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix }}" {{ block.shopify_attributes }}>
+          <span class="spec-n">0</span>
+          <span class="spec-l">{{ block.settings.label }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  function easeOutExpo(t){ return t===1?1:1-Math.pow(2,-10*t); }
+  function countUp(el, target, suffix, dur){
+    var s = performance.now(); el.classList.add('counting');
+    function u(now){
+      var p = Math.min((now-s)/dur,1), v = easeOutExpo(p)*target;
+      el.textContent = (target%1===0?Math.floor(v):v.toFixed(1))+suffix;
+      if(p<1) requestAnimationFrame(u);
+      else { el.textContent=target+suffix; el.classList.remove('counting'); }
+    }
+    requestAnimationFrame(u);
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.spec').forEach(function(item,i){
+          setTimeout(function(){
+            countUp(item.querySelector('.spec-n'), parseFloat(item.dataset.target), item.dataset.suffix||'', 2000);
+          }, i*200);
+        });
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.3});
+  var el = document.getElementById('specs');
+  if(el) obs.observe(el);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Stats Banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow Text", "default": "By The Numbers" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "number", "id": "number", "label": "Number",  "default": 100 },
+        { "type": "text",   "id": "suffix", "label": "Suffix",  "default": "+" },
+        { "type": "text",   "id": "label",  "label": "Label",   "default": "Orders Shipped" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stats Banner",
+      "blocks": [
+        { "type": "stat", "settings": { "number": 138, "suffix": "+", "label": "Orders Shipped" } },
+        { "type": "stat", "settings": { "number": 130, "suffix": "+", "label": "Community Members" } },
+        { "type": "stat", "settings": { "number": 4,   "suffix": "",  "label": "Game Universes" } },
+        { "type": "stat", "settings": { "number": 100, "suffix": "%", "label": "Authentic Products" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

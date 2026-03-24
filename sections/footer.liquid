@@ -1,0 +1,39 @@
+<footer>
+  <div class="foot">
+    <div class="foot-brand">
+      {% render 'logo-svg', width: 22, height: 22 %}
+      <span class="foot-name"><span class="g">{{ section.settings.brand_first | default: 'TheGeek' }}</span>{{ section.settings.brand_second | default: 'Lounge' }}</span>
+    </div>
+    <div class="foot-tags">
+      <span class="ft pk">POKÉMON TCG</span>
+      <span class="ft op">ONE PIECE TCG</span>
+      <span class="ft na">NARUTO TCG</span>
+      <span class="ft ll">LOL RIFT BOUND</span>
+    </div>
+    {%- if section.settings.footer_menu != blank -%}
+      <div class="foot-links">
+        {%- for link in linklists[section.settings.footer_menu].links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="foot-links">
+        <a href="{{ policies.privacy_policy.url | default: '#' }}">Privacy</a>
+        <a href="{{ policies.terms_of_service.url | default: '#' }}">Terms</a>
+        <a href="mailto:contact@thegeeklounge.com">Contact</a>
+      </div>
+    {%- endif -%}
+    <p class="foot-copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved. Collecting since day one.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text",      "id": "brand_first",  "label": "Brand (Highlighted)", "default": "TheGeek" },
+    { "type": "text",      "id": "brand_second", "label": "Brand (Normal)",      "default": "Lounge" },
+    { "type": "link_list", "id": "footer_menu",  "label": "Footer Menu" }
+  ]
+}
+{% endschema %}
