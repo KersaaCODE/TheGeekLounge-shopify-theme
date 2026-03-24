@@ -11,17 +11,13 @@
   "sections": {
     "hero_video": {
       "type": "hero-video",
-      "settings": {
-        "brand_first": "TheGeek",
-        "brand_second": "Lounge",
-        "loading_text": "Entering the lounge"
-      },
       "blocks": {
         "hotspot_pk": {
           "type": "hotspot",
           "settings": {
+            "collection": "pokemon",
             "label": "Pokémon TCG",
-            "color": "#FFE500",
+            "color": "#ffe500",
             "pos_x": 27,
             "pos_y": 25,
             "pos_w": 18,
@@ -31,8 +27,9 @@
         "hotspot_op": {
           "type": "hotspot",
           "settings": {
+            "collection": "one-piece",
             "label": "One Piece TCG",
-            "color": "#FF6B2B",
+            "color": "#ff6b2b",
             "pos_x": 5,
             "pos_y": 25,
             "pos_w": 30,
@@ -42,8 +39,9 @@
         "hotspot_na": {
           "type": "hotspot",
           "settings": {
+            "collection": "naruto",
             "label": "Naruto TCG",
-            "color": "#FF4500",
+            "color": "#ff4500",
             "pos_x": 20,
             "pos_y": 55,
             "pos_w": 55,
@@ -53,8 +51,9 @@
         "hotspot_ll": {
           "type": "hotspot",
           "settings": {
+            "collection": "lol-rift-bound",
             "label": "LoL Rift Bound",
-            "color": "#00C0FF",
+            "color": "#00c0ff",
             "pos_x": 70,
             "pos_y": 27,
             "pos_w": 30,
@@ -62,32 +61,63 @@
           }
         }
       },
-      "block_order": ["hotspot_pk", "hotspot_op", "hotspot_na", "hotspot_ll"]
+      "block_order": [
+        "hotspot_pk",
+        "hotspot_op",
+        "hotspot_na",
+        "hotspot_ll"
+      ],
+      "settings": {
+        "brand_first": "TheGeek",
+        "brand_second": "Lounge",
+        "loading_text": "Entering the lounge"
+      }
     },
     "specs_banner": {
       "type": "specs-banner",
-      "settings": {
-        "eyebrow": "By The Numbers"
-      },
       "blocks": {
         "stat_orders": {
           "type": "stat",
-          "settings": { "number": 138, "suffix": "+", "label": "Orders Shipped" }
+          "settings": {
+            "number": 138,
+            "suffix": "+",
+            "label": "Orders Shipped"
+          }
         },
         "stat_community": {
           "type": "stat",
-          "settings": { "number": 130, "suffix": "+", "label": "Community Members" }
+          "settings": {
+            "number": 130,
+            "suffix": "+",
+            "label": "Community Members"
+          }
         },
         "stat_universes": {
           "type": "stat",
-          "settings": { "number": 4, "suffix": "", "label": "Game Universes" }
+          "settings": {
+            "number": 4,
+            "suffix": "",
+            "label": "Game Universes"
+          }
         },
         "stat_authentic": {
           "type": "stat",
-          "settings": { "number": 100, "suffix": "%", "label": "Authentic Products" }
+          "settings": {
+            "number": 100,
+            "suffix": "%",
+            "label": "Authentic Products"
+          }
         }
       },
-      "block_order": ["stat_orders", "stat_community", "stat_universes", "stat_authentic"]
+      "block_order": [
+        "stat_orders",
+        "stat_community",
+        "stat_universes",
+        "stat_authentic"
+      ],
+      "settings": {
+        "eyebrow": "By The Numbers"
+      }
     },
     "featured_collection": {
       "type": "featured-collection",
@@ -95,70 +125,80 @@
         "eyebrow": "// Latest Drops",
         "title": "Latest Drops",
         "subtitle": "Fresh pulls just landed. Grab them before they're gone.",
+        "collection": "",
         "limit": 8
       }
     },
     "universe_cards": {
       "type": "universe-cards",
-      "settings": {
-        "title": "Shop by Universe",
-        "subtitle": "Four legendary universes. One lounge. Find your game and start pulling."
-      },
       "blocks": {
         "pokemon": {
           "type": "universe",
           "settings": {
+            "collection": "",
+            "fallback_url": "/collections/pokemon",
             "icon": "⚡",
             "badge": "Pokémon TCG",
             "name": "Pokémon Cards & Sealed",
             "description": "From vintage classics to the latest expansions. Booster packs, Elite Trainer Boxes, premium collections & rare singles — catch 'em all.",
-            "color": "#FFE500",
+            "color": "#ffe500",
             "tags": "Booster Packs, Elite Trainer Boxes, Sealed Sets, Rare Singles",
-            "cta_label": "Browse Pokémon",
-            "fallback_url": "/collections/pokemon"
+            "cta_label": "Browse Pokémon"
           }
         },
         "onepiece": {
           "type": "universe",
           "settings": {
+            "collection": "",
+            "fallback_url": "/collections/one-piece",
             "icon": "☠️",
             "badge": "One Piece TCG",
             "name": "One Piece Cards & Sealed",
             "description": "Set sail with the Straw Hats. Full sets, sealed booster boxes, alternate art rarities & fresh pulls from every arc of the Grand Line.",
-            "color": "#FF6B2B",
+            "color": "#ff6b2b",
             "tags": "Booster Boxes, Leader Cards, Alt Art Rarities, Sealed Sets",
-            "cta_label": "Browse One Piece",
-            "fallback_url": "/collections/one-piece"
+            "cta_label": "Browse One Piece"
           }
         },
         "naruto": {
           "type": "universe",
           "settings": {
+            "collection": "",
+            "fallback_url": "/collections/naruto",
             "icon": "🍃",
             "badge": "Naruto TCG",
             "name": "Naruto Cards & Sealed",
             "description": "From the Hidden Leaf to the Summit. Ninja cards, sealed products, collector editions & legendary jutsu pulls await your collection.",
-            "color": "#FF4500",
+            "color": "#ff4500",
             "tags": "Singles, Sealed Packs, Collector Sets, Rare Jutsu",
-            "cta_label": "Browse Naruto",
-            "fallback_url": "/collections/naruto"
+            "cta_label": "Browse Naruto"
           }
         },
         "lolriftbound": {
           "type": "universe",
           "settings": {
+            "collection": "",
+            "fallback_url": "/collections/lol-rift-bound",
             "icon": "⚔️",
             "badge": "LoL Rift Bound",
             "name": "Rift Bound Cards & Sealed",
             "description": "The newest card game drops on the Rift. Be a pioneer — sealed product, starter decks & rare champion cards available while stock lasts.",
-            "color": "#00C0FF",
+            "color": "#00c0ff",
             "tags": "Starter Decks, Booster Packs, Champion Cards, Sealed Sets",
-            "cta_label": "Browse Rift Bound",
-            "fallback_url": "/collections/lol-rift-bound"
+            "cta_label": "Browse Rift Bound"
           }
         }
       },
-      "block_order": ["pokemon", "onepiece", "naruto", "lolriftbound"]
+      "block_order": [
+        "pokemon",
+        "onepiece",
+        "naruto",
+        "lolriftbound"
+      ],
+      "settings": {
+        "title": "Shop by Universe",
+        "subtitle": "Four legendary universes. One lounge. Find your game and start pulling."
+      }
     },
     "newsletter": {
       "type": "newsletter",
