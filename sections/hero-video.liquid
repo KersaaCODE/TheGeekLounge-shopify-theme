@@ -19,22 +19,46 @@
     <source src="{{ 'hover.mp4' | asset_url }}" type="video/mp4">
   </video>
 
-  <!-- Card hotspots — positioned over each card in the final frame -->
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'hotspot' -%}
-      {%- assign hs_color = block.settings.color | default: '#FFE500' -%}
-      {%- assign hs_r = hs_color | color_extract: 'red' -%}
-      {%- assign hs_g = hs_color | color_extract: 'green' -%}
-      {%- assign hs_b = hs_color | color_extract: 'blue' -%}
-      <a href="{{ block.settings.collection.url | default: '#' }}"
-         class="card-hs"
-         style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;width:{{ block.settings.pos_w }}%;height:{{ block.settings.pos_h }}%;--hs-r:{{ hs_r }};--hs-g:{{ hs_g }};--hs-b:{{ hs_b }};"
-         {{ block.shopify_attributes }}>
-        <div class="hs-ring" style="border-color:rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.4);box-shadow:0 0 20px rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.12);"></div>
-        <div class="hs-tip" style="background:rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.15);color:{{ hs_color }};border:1px solid rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.3);">{{ block.settings.label }} →</div>
-      </a>
-    {%- endif -%}
-  {%- endfor -%}
+  <!-- ── PRODUCT MINI-CARDS ────────────────────────────── -->
+  <div id="miniCards">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product_card' -%}
+        {%- assign prod = block.settings.product -%}
+        {%- assign hs_color = block.settings.color | default: '#00FF6A' -%}
+        {%- assign hs_r = hs_color | color_extract: 'red' -%}
+        {%- assign hs_g = hs_color | color_extract: 'green' -%}
+        {%- assign hs_b = hs_color | color_extract: 'blue' -%}
+
+        <a href="{{ prod.url | default: block.settings.fallback_url | default: '#' }}"
+           class="mini-card"
+           style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;--mc-r:{{ hs_r }};--mc-g:{{ hs_g }};--mc-b:{{ hs_b }};"
+           {{ block.shopify_attributes }}>
+          <div class="mc-glow"></div>
+          <div class="mc-inner">
+            {%- if prod.featured_image -%}
+              <div class="mc-img">
+                <img src="{{ prod.featured_image | image_url: width: 200 }}"
+                     alt="{{ prod.title | escape }}"
+                     loading="lazy" width="80" height="112">
+              </div>
+            {%- else -%}
+              <div class="mc-img mc-placeholder">
+                <svg viewBox="0 0 40 56" fill="none"><rect width="40" height="56" rx="4" fill="rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.15)"/><path d="M12 20h16M12 28h10M12 36h14" stroke="rgba({{ hs_r }},{{ hs_g }},{{ hs_b }},0.4)" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+            {%- endif -%}
+            <div class="mc-info">
+              <span class="mc-name">{{ prod.title | default: block.settings.label | truncate: 22 }}</span>
+              {%- if prod.price -%}
+                <span class="mc-price" style="color:rgb({{ hs_r }},{{ hs_g }},{{ hs_b }});">{{ prod.price | money }}</span>
+              {%- else -%}
+                <span class="mc-tag" style="color:rgb({{ hs_r }},{{ hs_g }},{{ hs_b }});">{{ block.settings.label }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
 
   <!-- Holographic shimmer overlay -->
   <div id="holo"></div>
@@ -57,10 +81,11 @@
   var loadScreen = document.getElementById('loadScreen');
   var introVideo = document.getElementById('introVideo');
   var hoverVideo = document.getElementById('hoverVideo');
-  var hotspots   = document.querySelectorAll('.card-hs');
+  var miniCards  = document.getElementById('miniCards');
   var scrollHint = document.getElementById('scrollHint');
   var holo       = document.getElementById('holo');
   var introEl    = document.getElementById('intro');
+  var cards      = document.querySelectorAll('.mini-card');
 
   introVideo.addEventListener('canplay', function(){
     loadScreen.style.opacity = '0';
@@ -78,8 +103,10 @@
     hoverVideo.classList.add('active');
     setTimeout(function(){ introVideo.style.display = 'none'; }, 450);
 
-    hotspots.forEach(function(h, i){
-      setTimeout(function(){ h.classList.add('show'); }, 400 + i * 120);
+    /* Stagger mini-cards in */
+    miniCards.classList.add('show');
+    cards.forEach(function(c, i){
+      setTimeout(function(){ c.classList.add('show'); }, 300 + i * 150);
     });
     setTimeout(function(){ holo.classList.add('active'); }, 600);
     setTimeout(function(){ scrollHint.classList.add('show'); }, 900);
@@ -94,6 +121,14 @@
     holo.style.setProperty('--holo-x', x);
     holo.style.setProperty('--holo-y', y);
     holo.style.setProperty('--holo-angle', ang);
+
+    /* Subtle parallax on mini-cards */
+    var mx = (e.clientX - r.left) / r.width - 0.5;
+    var my = (e.clientY - r.top)  / r.height - 0.5;
+    cards.forEach(function(c){
+      var d = parseFloat(c.getAttribute('data-depth') || '1');
+      c.style.transform = 'translate(' + (mx * 8 * d) + 'px,' + (my * 6 * d) + 'px)';
+    });
   });
 })();
 </script>
@@ -109,16 +144,15 @@
   ],
   "blocks": [
     {
-      "type": "hotspot",
-      "name": "Card Hotspot",
+      "type": "product_card",
+      "name": "Product Card",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "text",       "id": "label",      "label": "Label",     "default": "Pokémon TCG" },
-        { "type": "color",      "id": "color",      "label": "Color",     "default": "#FFE500" },
-        { "type": "range",      "id": "pos_x",      "label": "X Position (%)", "min": 0, "max": 100, "step": 1, "default": 25 },
-        { "type": "range",      "id": "pos_y",      "label": "Y Position (%)", "min": 0, "max": 100, "step": 1, "default": 25 },
-        { "type": "range",      "id": "pos_w",      "label": "Width (%)",      "min": 5, "max": 60,  "step": 1, "default": 18 },
-        { "type": "range",      "id": "pos_h",      "label": "Height (%)",     "min": 5, "max": 80,  "step": 1, "default": 38 }
+        { "type": "product",  "id": "product",       "label": "Product" },
+        { "type": "text",     "id": "label",         "label": "Fallback Label", "default": "Shop Now" },
+        { "type": "url",      "id": "fallback_url",  "label": "Fallback URL (if no product)" },
+        { "type": "color",    "id": "color",         "label": "Card Accent",    "default": "#00FF6A" },
+        { "type": "range",    "id": "pos_x",         "label": "X Position (%)", "min": 2, "max": 88, "step": 1, "default": 15 },
+        { "type": "range",    "id": "pos_y",         "label": "Y Position (%)", "min": 2, "max": 85, "step": 1, "default": 60 }
       ]
     }
   ],
@@ -126,10 +160,10 @@
     {
       "name": "Hero Video",
       "blocks": [
-        { "type": "hotspot", "settings": { "label": "Pokémon TCG",    "color": "#FFE500", "pos_x": 27, "pos_y": 25, "pos_w": 18, "pos_h": 38 } },
-        { "type": "hotspot", "settings": { "label": "One Piece TCG",  "color": "#FF6B2B", "pos_x": 5,  "pos_y": 25, "pos_w": 30, "pos_h": 40 } },
-        { "type": "hotspot", "settings": { "label": "Naruto TCG",     "color": "#FF4500", "pos_x": 20, "pos_y": 55, "pos_w": 55, "pos_h": 43 } },
-        { "type": "hotspot", "settings": { "label": "LoL Rift Bound", "color": "#00C0FF", "pos_x": 70, "pos_y": 27, "pos_w": 30, "pos_h": 47 } }
+        { "type": "product_card", "settings": { "label": "Pokemon TCG",    "color": "#FFE500", "pos_x": 8,  "pos_y": 68 } },
+        { "type": "product_card", "settings": { "label": "One Piece TCG",  "color": "#FF6B2B", "pos_x": 30, "pos_y": 72 } },
+        { "type": "product_card", "settings": { "label": "Naruto TCG",     "color": "#FF4500", "pos_x": 54, "pos_y": 68 } },
+        { "type": "product_card", "settings": { "label": "LoL Rift Bound", "color": "#00C0FF", "pos_x": 76, "pos_y": 72 } }
       ]
     }
   ]
