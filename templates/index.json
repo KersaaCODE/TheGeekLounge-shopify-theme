@@ -21,36 +21,28 @@
           "type": "product_card",
           "settings": {
             "label": "Pokemon TCG",
-            "color": "#FFE500",
-            "pos_x": 8,
-            "pos_y": 68
+            "color": "#FFE500"
           }
         },
         "card_op": {
           "type": "product_card",
           "settings": {
             "label": "One Piece TCG",
-            "color": "#FF6B2B",
-            "pos_x": 30,
-            "pos_y": 72
+            "color": "#FF6B2B"
           }
         },
         "card_na": {
           "type": "product_card",
           "settings": {
             "label": "Naruto TCG",
-            "color": "#FF4500",
-            "pos_x": 54,
-            "pos_y": 68
+            "color": "#FF4500"
           }
         },
         "card_ll": {
           "type": "product_card",
           "settings": {
             "label": "LoL Rift Bound",
-            "color": "#00C0FF",
-            "pos_x": 76,
-            "pos_y": 72
+            "color": "#00C0FF"
           }
         }
       },

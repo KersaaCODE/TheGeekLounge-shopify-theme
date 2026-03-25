@@ -293,18 +293,19 @@ h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
 
 /* ── PRODUCT MINI-CARDS ───────────────────────────────── */
 #miniCards {
-  position:absolute;inset:0;z-index:10;
-  pointer-events:none;
+  position:absolute;bottom:10%;left:50%;transform:translateX(-50%);
+  z-index:10;pointer-events:none;
+  display:flex;gap:20px;align-items:flex-end;justify-content:center;
 }
 #miniCards.show { pointer-events:auto; }
 
 .mini-card {
-  position:absolute;z-index:10;
+  position:relative;z-index:10;
   text-decoration:none;cursor:pointer;
   opacity:0;pointer-events:none;
-  transform:translateY(16px) scale(0.92);
+  transform:translateY(24px) scale(0.9);
   transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  width:110px;
+  width:155px;flex-shrink:0;
 }
 .mini-card.show {
   opacity:1;pointer-events:auto;
@@ -313,75 +314,77 @@ h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; }
 
 /* Neon glow behind card */
 .mc-glow {
-  position:absolute;inset:-6px;border-radius:16px;
-  background:radial-gradient(ellipse at center, rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.25) 0%, transparent 70%);
+  position:absolute;inset:-8px;border-radius:18px;
+  background:radial-gradient(ellipse at center, rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.3) 0%, transparent 70%);
   opacity:0;transition:opacity 0.3s ease;
-  filter:blur(10px);
+  filter:blur(14px);
 }
 .mini-card:hover .mc-glow { opacity:1; }
 
 /* Glass card body */
 .mc-inner {
-  background:rgba(10,8,18,0.75);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:rgba(10,8,18,0.78);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border:1px solid rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.25);
-  border-radius:12px;
-  padding:8px;
+  border-radius:14px;
+  padding:10px;
   transition:border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   overflow:hidden;
 }
 .mini-card:hover .mc-inner {
   border-color:rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.6);
-  transform:translateY(-4px);
-  box-shadow:0 8px 24px rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.15);
+  transform:translateY(-6px);
+  box-shadow:0 12px 32px rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.18);
 }
 
 /* Product image */
 .mc-img {
-  width:100%;aspect-ratio:5/7;border-radius:8px;overflow:hidden;
+  width:100%;aspect-ratio:5/7;border-radius:10px;overflow:hidden;
   background:rgba(var(--mc-r),var(--mc-g),var(--mc-b),0.06);
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 .mc-img img {
   width:100%;height:100%;object-fit:cover;
   transition:transform 0.4s ease;
 }
-.mini-card:hover .mc-img img { transform:scale(1.06); }
+.mini-card:hover .mc-img img { transform:scale(1.05); }
 
 /* Placeholder SVG */
 .mc-placeholder { display:flex;align-items:center;justify-content:center; }
-.mc-placeholder svg { width:60%;height:auto; }
+.mc-placeholder svg { width:55%;height:auto; }
 
 /* Product info */
 .mc-info {
-  display:flex;flex-direction:column;gap:2px;
-  padding:0 2px;
+  display:flex;flex-direction:column;gap:3px;
+  padding:0 3px;
 }
 .mc-name {
-  font-family:'Space Grotesk',sans-serif;font-size:0.68rem;font-weight:600;
-  color:#fff;line-height:1.2;
+  font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;
+  color:#fff;line-height:1.25;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .mc-price {
-  font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:700;
 }
 .mc-tag {
-  font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:600;
+  font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;
   text-transform:uppercase;letter-spacing:1px;
 }
 
 /* ── MINI-CARD RESPONSIVE ──────────────────────────────── */
 @media(max-width:768px){
-  .mini-card { width:80px; }
-  .mc-inner { padding:5px; }
-  .mc-name { font-size:0.58rem; }
-  .mc-price,.mc-tag { font-size:0.55rem; }
-  .mc-img { margin-bottom:4px; }
+  #miniCards { gap:12px; }
+  .mini-card { width:115px; }
+  .mc-inner { padding:7px; }
+  .mc-name { font-size:0.7rem; }
+  .mc-price,.mc-tag { font-size:0.65rem; }
 }
 @media(max-width:480px){
-  .mini-card { width:68px; }
-  .mc-inner { padding:4px;border-radius:8px; }
-  .mc-name { font-size:0.52rem;-webkit-line-clamp:1; }
+  #miniCards { gap:8px;bottom:6%; }
+  .mini-card { width:80px; }
+  .mc-inner { padding:5px;border-radius:10px; }
+  .mc-name { font-size:0.58rem;-webkit-line-clamp:1; }
+  .mc-price,.mc-tag { font-size:0.52rem; }
 }
 
 /* Scroll hint */

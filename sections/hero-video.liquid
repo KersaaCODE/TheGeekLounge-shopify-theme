@@ -31,7 +31,8 @@
 
         <a href="{{ prod.url | default: block.settings.fallback_url | default: '#' }}"
            class="mini-card"
-           style="left:{{ block.settings.pos_x }}%;top:{{ block.settings.pos_y }}%;--mc-r:{{ hs_r }};--mc-g:{{ hs_g }};--mc-b:{{ hs_b }};"
+           data-depth="{{ forloop.index | modulo: 2 | plus: 1 | times: 0.6 }}"
+           style="--mc-r:{{ hs_r }};--mc-g:{{ hs_g }};--mc-b:{{ hs_b }};"
            {{ block.shopify_attributes }}>
           <div class="mc-glow"></div>
           <div class="mc-inner">
@@ -150,9 +151,7 @@
         { "type": "product",  "id": "product",       "label": "Product" },
         { "type": "text",     "id": "label",         "label": "Fallback Label", "default": "Shop Now" },
         { "type": "url",      "id": "fallback_url",  "label": "Fallback URL (if no product)" },
-        { "type": "color",    "id": "color",         "label": "Card Accent",    "default": "#00FF6A" },
-        { "type": "range",    "id": "pos_x",         "label": "X Position (%)", "min": 2, "max": 88, "step": 1, "default": 15 },
-        { "type": "range",    "id": "pos_y",         "label": "Y Position (%)", "min": 2, "max": 85, "step": 1, "default": 60 }
+        { "type": "color",    "id": "color",         "label": "Card Accent",    "default": "#00FF6A" }
       ]
     }
   ],
@@ -160,10 +159,10 @@
     {
       "name": "Hero Video",
       "blocks": [
-        { "type": "product_card", "settings": { "label": "Pokemon TCG",    "color": "#FFE500", "pos_x": 8,  "pos_y": 68 } },
-        { "type": "product_card", "settings": { "label": "One Piece TCG",  "color": "#FF6B2B", "pos_x": 30, "pos_y": 72 } },
-        { "type": "product_card", "settings": { "label": "Naruto TCG",     "color": "#FF4500", "pos_x": 54, "pos_y": 68 } },
-        { "type": "product_card", "settings": { "label": "LoL Rift Bound", "color": "#00C0FF", "pos_x": 76, "pos_y": 72 } }
+        { "type": "product_card", "settings": { "label": "Pokemon TCG",    "color": "#FFE500" } },
+        { "type": "product_card", "settings": { "label": "One Piece TCG",  "color": "#FF6B2B" } },
+        { "type": "product_card", "settings": { "label": "Naruto TCG",     "color": "#FF4500" } },
+        { "type": "product_card", "settings": { "label": "LoL Rift Bound", "color": "#00C0FF" } }
       ]
     }
   ]
