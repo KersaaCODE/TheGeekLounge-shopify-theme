@@ -35,14 +35,14 @@
             "type": "link",
             "settings": {
               "label": "Pokémon",
-              "url": "/collections/pokemon"
+              "url": "shopify://collections/pokemon"
             }
           },
           "link_onepiece": {
             "type": "link",
             "settings": {
               "label": "One Piece",
-              "url": "/collections/onepiece"
+              "url": "shopify://collections/one-piece"
             }
           },
           "cta_shop": {

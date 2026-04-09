@@ -15,7 +15,7 @@
         "card_pk": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "ascended-heroes-etb",
             "label": "Pokemon TCG",
             "fallback_url": "",
             "color": "#ffe500"
@@ -24,7 +24,7 @@
         "card_op": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "tashigi-alternate-art",
             "label": "One Piece TCG",
             "fallback_url": "",
             "color": "#ff6b2b"
@@ -33,7 +33,7 @@
         "card_na": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "orochimaru-naruto-kayou-mr-007",
             "label": "Naruto TCG",
             "fallback_url": "",
             "color": "#ff4500"
@@ -42,7 +42,7 @@
         "card_ll": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "ezreal-prodigy",
             "label": "LoL Rift Bound",
             "fallback_url": "",
             "color": "#00c0ff"
