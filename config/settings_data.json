@@ -23,10 +23,6 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {
-          "brand_first": "TheGeek",
-          "brand_second": "Lounge"
-        },
         "blocks": {
           "link_all": {
             "type": "link",
@@ -62,7 +58,11 @@
           "link_pokemon",
           "link_onepiece",
           "cta_shop"
-        ]
+        ],
+        "settings": {
+          "brand_first": "TheGeek",
+          "brand_second": "Lounge"
+        }
       },
       "footer": {
         "type": "footer",
@@ -75,11 +75,20 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "settings": {
+          "show_bar": false,
           "text": "🔥 Free shipping on orders over $50 — New drops every Friday!",
-          "link_url": "/collections/all",
-          "show_bar": true
+          "link_url": "/collections/all"
+        }
+      },
+      "cookie-banner": {
+        "type": "cookie-banner",
+        "settings": {
+          "show_banner": true,
+          "text": "We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies.",
+          "policy_url": ""
         }
       }
-    }
+    },
+    "content_for_index": []
   }
 }
